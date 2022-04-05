@@ -3,7 +3,6 @@ import { ReactComponent as FileIcon } from 'icons/File.svg'
 import { ReactComponent as TrashIcon } from 'icons/Trash.svg'
 import { ReactComponent as DiskIcon } from 'icons/Disk.svg'
 import styles from './Navbar.module.scss'
-import Button from 'components/Button'
 import Logo from 'components/Logo'
 import IconButton from 'components/IconButton'
 
