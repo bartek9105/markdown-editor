@@ -1,0 +1,16 @@
+@use 'styles/colors' as *;
+
+.button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: $color-burnt-sienna;
+	border-radius: 4px;
+	transition: background-color ease-in-out 0.2s;
+	padding: 12px;
+	color: $color-white;
+
+	&:hover {
+		background-color: $color-sandy-brown;
+	}
+}

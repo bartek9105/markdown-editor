@@ -1,0 +1,21 @@
+@use 'styles/sizes' as *;
+
+%visibleOnMobileOnly {
+	@media (min-width: $screen-tablet) {
+		display: none;
+	}
+}
+
+%visibleOnTabletOrBigger {
+	display: none;
+	@media (min-width: $screen-tablet) {
+		display: unset;
+	}
+}
+
+%visibleOnDesktopOnly {
+	display: none;
+	@media (min-width: $screen-desktop) {
+		display: unset;
+	}
+}

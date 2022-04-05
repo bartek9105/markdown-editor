@@ -1,0 +1,93 @@
+@use 'styles/colors' as *;
+@use 'styles/placeholders/visibility' as *;
+@use 'styles/mixins/responsive' as *;
+
+.container {
+	display: flex;
+	align-items: center;
+	background-color: $color-shark;
+	height: 56px;
+	@include tablet {
+		height: 72px;
+	}
+}
+
+.hamburgerIconContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 56px;
+	height: 56px;
+	background-color: $color-tuna;
+	cursor: pointer;
+	transition: background-color ease-in-out 0.2s;
+	@include tablet {
+		width: 72px;
+		height: 72px;
+	}
+	&:hover {
+		background-color: $color-shittle-gray;
+	}
+}
+
+.logo {
+	@extend %visibleOnDesktopOnly;
+}
+
+.content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex: 1;
+	padding: 0 8px 0 24px;
+	@include tablet {
+		padding-right: 16px;
+	}
+}
+
+.fileDetails {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+}
+
+.fileInfo {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.fileHint {
+	font-size: 13px;
+	font-weight: 300;
+	color: $color-rolling-stone;
+	@extend %visibleOnTabletOrBigger;
+}
+
+.fileName {
+	color: $color-white;
+	font-size: 15px;
+	font-weight: 400;
+}
+
+.icons {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+}
+
+.line {
+	width: 1px;
+	height: 40px;
+	background-color: $color-shittle-gray;
+	@extend %visibleOnDesktopOnly;
+}
+
+.trashIcon {
+	cursor: pointer;
+	color: $color-rolling-stone;
+	transition: color ease-in-out 0.2s;
+	&:hover {
+		color: $color-white;
+	}
+}
