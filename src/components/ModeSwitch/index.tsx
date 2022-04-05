@@ -13,7 +13,6 @@ type ModeSwitchProps = {
 }
 
 const ModeSwitch = ({ mode = Mode.PREVIEW, setMode }: ModeSwitchProps) => {
-	// const modeTitle = mode === Mode.MARKDOWN ? 'Markdown' :;
 	return (
 		<div className={styles.container}>
 			<span className={styles.modeHint}>{mode}</span>
