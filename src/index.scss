@@ -9,6 +9,7 @@
 body {
 	font-family: 'Roboto Slab', monospace;
 	font-weight: 400;
+	height: 100vh;
 }
 
 button {
@@ -18,4 +19,8 @@ button {
 
 ul {
 	list-style: none;
+}
+
+a {
+	color: inherit;
 }

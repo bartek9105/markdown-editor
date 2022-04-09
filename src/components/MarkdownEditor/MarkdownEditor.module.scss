@@ -1,4 +1,8 @@
 @use 'styles/colors' as *;
+@use 'styles/mixins/responsive' as *;
+
+$content-padding: 16px;
+$content-padding-desktop: 24px;
 
 .paragraph {
 	font-size: 14px;
@@ -11,6 +15,13 @@
 	font-size: 14px;
 	line-height: 24px;
 	color: $color-rolling-stone;
+}
+
+.orderedList {
+	padding-left: $content-padding;
+	@include desktop-sm {
+		padding: $content-padding-desktop;
+	}
 }
 
 .unorderedList {
@@ -36,4 +47,14 @@
 	padding: 24px;
 	border-radius: 4px;
 	color: $color-tuna !important;
+	margin: 20px 0;
+}
+
+.editor {
+	display: grid;
+	row-gap: 20px;
+	padding: $content-padding;
+	@include desktop-sm {
+		padding: $content-padding-desktop;
+	}
 }

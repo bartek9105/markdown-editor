@@ -9,6 +9,7 @@ type MarkdownEditorProps = {
 const MarkdownEditor = ({ markdown }: MarkdownEditorProps) => {
 	return (
 		<ReactMarkdown
+			className={styles.editor}
 			children={markdown}
 			components={{
 				h1: ({ node, ...props }) => <Heading {...props} level={1} />,
