@@ -1,0 +1,29 @@
+@use 'styles/colors' as *;
+
+.container {
+	display: flex;
+	gap: 16px;
+	align-items: center;
+	cursor: pointer;
+	background-color: $color-smoke;
+	transition: 0.2s ease-in-out background-color;
+	&:hover {
+		background-color: $color-tuna;
+	}
+}
+
+.fileInfo {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+
+.date {
+	color: $color-rolling-stone;
+	font-size: 13px;
+}
+
+.fileName {
+	color: $color-white;
+	font-size: 15px;
+}
