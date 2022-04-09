@@ -1,0 +1,32 @@
+@use 'styles/colors' as *;
+
+.heading {
+	color: $color-tuna;
+	font-weight: 700;
+}
+
+.headingLevel1 {
+	font-size: 32px;
+}
+
+.headingLevel2 {
+	font-weight: 300;
+	font-size: 28px;
+}
+
+.headingLevel3 {
+	font-size: 24px;
+}
+
+.headingLevel4 {
+	font-size: 20px;
+}
+
+.headingLevel5 {
+	font-size: 16px;
+}
+
+.headingLevel6 {
+	font-size: 14px;
+	color: $color-burnt-sienna;
+}
