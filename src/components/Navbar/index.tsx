@@ -5,23 +5,17 @@ import { ReactComponent as DiskIcon } from 'icons/Disk.svg'
 import styles from './Navbar.module.scss'
 import Logo from 'components/Logo'
 import IconButton from 'components/IconButton'
-import { useState } from 'react'
-import SideDrawer from 'components/SideDrawer'
 
 type NavbarProps = {
 	fileName: string
+	onMenuClick: () => void
 }
 
-const Navbar = ({ fileName }: NavbarProps) => {
-	const [isSideDrawerOpened, setIsSideDrawerOpened] = useState(false)
-
+const Navbar = ({ fileName, onMenuClick }: NavbarProps) => {
 	return (
 		<>
 			<nav className={styles.container}>
-				<div
-					className={styles.hamburgerIconContainer}
-					onClick={() => setIsSideDrawerOpened(true)}
-				>
+				<div className={styles.hamburgerIconContainer} onClick={onMenuClick}>
 					<HamburgerIcon />
 				</div>
 				<div className={styles.content}>
@@ -46,7 +40,6 @@ const Navbar = ({ fileName }: NavbarProps) => {
 					</div>
 				</div>
 			</nav>
-			{isSideDrawerOpened ? <SideDrawer /> : null}
 		</>
 	)
 }
