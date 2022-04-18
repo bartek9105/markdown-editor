@@ -65,9 +65,12 @@ const Home = () => {
 
 	return (
 		<>
-			{isSideDrawerOpened ? (
-				<SideDrawer files={files} setSelectedFile={setSelectedFile} />
-			) : null}
+			<SideDrawer
+				files={files}
+				setSelectedFile={setSelectedFile}
+				isOpen={isSideDrawerOpened}
+				onClose={() => setIsSideDrawerOpened(false)}
+			/>
 			<Navbar
 				fileName={selectedFile}
 				onMenuClick={() => setIsSideDrawerOpened(true)}
