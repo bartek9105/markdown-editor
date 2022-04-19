@@ -9,9 +9,10 @@ import IconButton from 'components/IconButton'
 type NavbarProps = {
 	fileName: string
 	onMenuClick: () => void
+	onSave: () => void
 }
 
-const Navbar = ({ fileName, onMenuClick }: NavbarProps) => {
+const Navbar = ({ fileName, onMenuClick, onSave }: NavbarProps) => {
 	return (
 		<>
 			<nav className={styles.container}>
@@ -34,7 +35,7 @@ const Navbar = ({ fileName, onMenuClick }: NavbarProps) => {
 					</div>
 					<div className={styles.icons}>
 						<TrashIcon className={styles.trashIcon} />
-						<IconButton className={styles.iconButton}>
+						<IconButton className={styles.iconButton} onClick={onSave}>
 							<DiskIcon />
 						</IconButton>
 					</div>

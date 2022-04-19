@@ -7,8 +7,13 @@ import { Mode } from 'components/ModeSwitch'
 import Textarea from 'components/Textarea'
 import { useScreenType } from 'hooks/useScreenType'
 import SideDrawer from 'components/SideDrawer'
-import { useQuery } from 'react-query'
-import { downloadFile, getFiles } from 'api/storage/markdown.api'
+import { useMutation, useQuery } from 'react-query'
+import {
+	downloadFile,
+	getFiles,
+	updateFile,
+	uploadFile
+} from 'api/storage/markdown.api'
 
 const Home = () => {
 	const [markdown, setMarkdown] = useState('')
@@ -16,6 +21,16 @@ const Home = () => {
 	const { isMobile } = useScreenType()
 	const [selectedFile, setSelectedFile] = useState('test.md')
 	const [isSideDrawerOpened, setIsSideDrawerOpened] = useState(false)
+
+	const file = new Blob([markdown], {
+		type: 'application/octet-stream'
+	})
+
+	const { mutate } = useMutation({
+		mutationFn: () => {
+			return updateFile(file, selectedFile)
+		}
+	})
 
 	const { data: files } = useQuery<any>({
 		queryFn: () => getFiles()
@@ -74,6 +89,7 @@ const Home = () => {
 			<Navbar
 				fileName={selectedFile}
 				onMenuClick={() => setIsSideDrawerOpened(true)}
+				onSave={() => mutate()}
 			/>
 			<ModeSwitch mode={mode} setMode={setMode} />
 			<div className={styles.container}>
