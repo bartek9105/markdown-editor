@@ -24,3 +24,15 @@ ul {
 a {
 	color: inherit;
 }
+
+.Toastify__toast {
+	font-family: 'Roboto';
+	font-size: 14px;
+	color: $color-white !important;
+	background-color: $color-shark !important;
+	border-bottom: 3px solid $color-burnt-sienna !important;
+}
+
+.Toastify__close-button {
+	color: $color-white !important;
+}

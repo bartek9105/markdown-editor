@@ -14,6 +14,7 @@ import {
 	updateFile,
 	uploadFile
 } from 'api/storage/markdown.api'
+import { toast } from 'react-toastify'
 
 const Home = () => {
 	const [markdown, setMarkdown] = useState('')
@@ -26,9 +27,12 @@ const Home = () => {
 		type: 'application/octet-stream'
 	})
 
-	const { mutate } = useMutation({
+	const { mutate, isLoading: isFileUpdating } = useMutation({
 		mutationFn: () => {
 			return updateFile(file, selectedFile)
+		},
+		onSuccess: () => {
+			toast.success('File saved successfuly')
 		}
 	})
 
@@ -78,11 +82,16 @@ const Home = () => {
 		)
 	}
 
+	const handleSetSelectedFile = (fileName: string) => {
+		setSelectedFile(fileName)
+		setIsSideDrawerOpened(false)
+	}
+
 	return (
 		<>
 			<SideDrawer
 				files={files}
-				setSelectedFile={setSelectedFile}
+				setSelectedFile={handleSetSelectedFile}
 				isOpen={isSideDrawerOpened}
 				onClose={() => setIsSideDrawerOpened(false)}
 			/>
@@ -90,6 +99,7 @@ const Home = () => {
 				fileName={selectedFile}
 				onMenuClick={() => setIsSideDrawerOpened(true)}
 				onSave={() => mutate()}
+				isLoading={isFileUpdating}
 			/>
 			<ModeSwitch mode={mode} setMode={setMode} />
 			<div className={styles.container}>

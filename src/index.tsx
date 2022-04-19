@@ -4,6 +4,8 @@ import './index.scss'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.min.css'
 
 const queryClient = new QueryClient()
 
@@ -11,6 +13,14 @@ ReactDOM.render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
 			<App />
+			<ToastContainer
+				position='bottom-center'
+				autoClose={3000}
+				hideProgressBar={true}
+				newestOnTop={true}
+				closeOnClick
+				rtl={false}
+			/>
 		</QueryClientProvider>
 	</React.StrictMode>,
 	document.getElementById('root')
