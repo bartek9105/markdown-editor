@@ -12,9 +12,16 @@ type NavbarProps = {
 	onMenuClick: () => void
 	onSave: () => void
 	isLoading: boolean
+	onDelete: () => void
 }
 
-const Navbar = ({ fileName, onMenuClick, onSave, isLoading }: NavbarProps) => {
+const Navbar = ({
+	fileName,
+	onMenuClick,
+	onSave,
+	isLoading,
+	onDelete
+}: NavbarProps) => {
 	return (
 		<nav className={styles.container}>
 			<div className={styles.hamburgerIconContainer} onClick={onMenuClick}>
@@ -35,7 +42,7 @@ const Navbar = ({ fileName, onMenuClick, onSave, isLoading }: NavbarProps) => {
 					</div>
 				</div>
 				<div className={styles.icons}>
-					<TrashIcon className={styles.trashIcon} />
+					<TrashIcon className={styles.trashIcon} onClick={onDelete} />
 					<IconButton
 						className={styles.iconButton}
 						onClick={onSave}

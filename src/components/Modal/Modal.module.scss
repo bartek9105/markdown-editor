@@ -1,0 +1,31 @@
+@use 'styles/colors' as *;
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 100;
+	background-color: $color-woodsmoke-opacity;
+	display: flex;
+	align-items: center;
+}
+
+.container {
+	background-color: $color-white;
+	z-index: 9999;
+	max-width: 343px;
+	margin: 0 auto;
+	border-radius: 4px;
+	padding: 24px;
+	display: grid;
+	row-gap: 16px;
+}
+
+.hint {
+	font-family: 'Roboto Slab';
+	font-size: 14px;
+	line-height: 24px;
+	color: $color-rolling-stone;
+}

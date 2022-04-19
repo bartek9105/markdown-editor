@@ -11,10 +11,11 @@ import { useMutation, useQuery } from 'react-query'
 import {
 	downloadFile,
 	getFiles,
-	updateFile,
-	uploadFile
+	removeFile,
+	updateFile
 } from 'api/storage/markdown.api'
 import { toast } from 'react-toastify'
+import Modal from 'components/Modal'
 
 const Home = () => {
 	const [markdown, setMarkdown] = useState('')
@@ -22,6 +23,7 @@ const Home = () => {
 	const { isMobile } = useScreenType()
 	const [selectedFile, setSelectedFile] = useState('test.md')
 	const [isSideDrawerOpened, setIsSideDrawerOpened] = useState(false)
+	const [isDeleteFileModalOpen, setIsDeleteFileModalOpen] = useState(false)
 
 	const file = new Blob([markdown], {
 		type: 'application/octet-stream'
@@ -33,6 +35,15 @@ const Home = () => {
 		},
 		onSuccess: () => {
 			toast.success('File saved successfuly')
+		}
+	})
+
+	const { mutate: deleteFile } = useMutation({
+		mutationFn: () => {
+			return removeFile(selectedFile)
+		},
+		onSuccess: () => {
+			toast.success('File deleted successfuly')
 		}
 	})
 
@@ -89,6 +100,14 @@ const Home = () => {
 
 	return (
 		<>
+			<Modal
+				isOpen={isDeleteFileModalOpen}
+				onClose={() => setIsDeleteFileModalOpen(false)}
+				onConfirm={() => {
+					deleteFile()
+					setIsDeleteFileModalOpen(false)
+				}}
+			/>
 			<SideDrawer
 				files={files}
 				setSelectedFile={handleSetSelectedFile}
@@ -100,6 +119,7 @@ const Home = () => {
 				onMenuClick={() => setIsSideDrawerOpened(true)}
 				onSave={() => mutate()}
 				isLoading={isFileUpdating}
+				onDelete={() => setIsDeleteFileModalOpen(true)}
 			/>
 			<ModeSwitch mode={mode} setMode={setMode} />
 			<div className={styles.container}>

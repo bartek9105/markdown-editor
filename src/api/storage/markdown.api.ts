@@ -30,3 +30,9 @@ export const updateFile = async (file: Blob, fileToUpdate: string) => {
 		})
 	return data
 }
+
+export const removeFile = async (file: string) => {
+	const { data, error } = await supabase.storage
+		.from('markdown')
+		.remove([`test/${file}`])
+}
