@@ -1,100 +1,48 @@
 import ModeSwitch from 'components/ModeSwitch'
 import Navbar from '../../components/Navbar'
 import { useState } from 'react'
-import styles from './Home.module.scss'
-import MarkdownEditor from 'components/MarkdownEditor'
 import { Mode } from 'components/ModeSwitch'
-import Textarea from 'components/Textarea'
-import { useScreenType } from 'hooks/useScreenType'
 import SideDrawer from 'components/SideDrawer'
-import { useMutation, useQuery } from 'react-query'
-import {
-	downloadFile,
-	getFiles,
-	removeFile,
-	updateFile
-} from 'api/storage/markdown.api'
-import { toast } from 'react-toastify'
 import Modal from 'components/Modal'
+import MarkdownLayout from 'components/MarkdownLayout'
+import { useDeleteFile } from 'hooks/useDeleteFile'
+import { useGetFiles } from 'hooks/useGetFiles'
+import { useUploadNewFile } from 'hooks/useUploadNewFile'
+import { useUpdateFile } from 'hooks/useUpdateFile'
+import { useGetFileMarkdown } from 'hooks/useGetFileMarkdown'
 
 const Home = () => {
-	const [markdown, setMarkdown] = useState('')
 	const [mode, setMode] = useState<Mode>(Mode.MARKDOWN)
-	const { isMobile } = useScreenType()
-	const [selectedFile, setSelectedFile] = useState('test.md')
+	const [selectedFile, setSelectedFile] = useState('')
+
 	const [isSideDrawerOpened, setIsSideDrawerOpened] = useState(false)
 	const [isDeleteFileModalOpen, setIsDeleteFileModalOpen] = useState(false)
 
-	const file = new Blob([markdown], {
-		type: 'application/octet-stream'
-	})
-
-	const { mutate, isLoading: isFileUpdating } = useMutation({
-		mutationFn: () => {
-			return updateFile(file, selectedFile)
-		},
-		onSuccess: () => {
-			toast.success('File saved successfuly')
-		}
-	})
-
-	const { mutate: deleteFile } = useMutation({
-		mutationFn: () => {
-			return removeFile(selectedFile)
-		},
-		onSuccess: () => {
-			toast.success('File deleted successfuly')
-		}
-	})
-
-	const { data: files } = useQuery<any>({
-		queryFn: () => getFiles()
-	})
-
-	const { data: markdownData } = useQuery<any>(['something', selectedFile], {
-		queryFn: () => downloadFile(selectedFile),
-		onSuccess: () => setMarkdown(markdownData)
-	})
-
-	const renderTextArea = () => {
-		return (
-			<div className={styles.textArea}>
-				<Textarea
-					value={markdown}
-					onChange={(e) => setMarkdown(e.target.value)}
-				/>
-			</div>
-		)
-	}
-
-	const renderMarkdownPreview = () => {
-		return (
-			<div>
-				<MarkdownEditor markdown={markdown} />
-			</div>
-		)
-	}
-
-	const renderMobileLayout = () => {
-		return (
-			<>
-				{mode === Mode.PREVIEW ? renderMarkdownPreview() : null}
-				{mode === Mode.MARKDOWN ? renderTextArea() : null}
-			</>
-		)
-	}
-
-	const renderTabletOrBiggerLayout = () => {
-		return (
-			<>
-				{renderTextArea()}
-				{renderMarkdownPreview()}
-			</>
-		)
-	}
+	const { markdown, setMarkdown } = useGetFileMarkdown(selectedFile)
+	const { deleteFile } = useDeleteFile(selectedFile)
+	const { files, refetchFiles } = useGetFiles()
+	const { uploadNewFile } = useUploadNewFile(markdown)
+	const { updateFileContent, isFileUpdating } = useUpdateFile(
+		markdown,
+		selectedFile
+	)
 
 	const handleSetSelectedFile = (fileName: string) => {
+		setMarkdown('')
 		setSelectedFile(fileName)
+		setIsSideDrawerOpened(false)
+	}
+
+	const handleFileDelete = () => {
+		deleteFile()
+		setIsDeleteFileModalOpen(false)
+		setSelectedFile('')
+		refetchFiles()
+	}
+
+	const handleCreateNewDocument = () => {
+		setSelectedFile('')
+		setMarkdown('')
 		setIsSideDrawerOpened(false)
 	}
 
@@ -103,28 +51,30 @@ const Home = () => {
 			<Modal
 				isOpen={isDeleteFileModalOpen}
 				onClose={() => setIsDeleteFileModalOpen(false)}
-				onConfirm={() => {
-					deleteFile()
-					setIsDeleteFileModalOpen(false)
-				}}
+				onConfirm={() => handleFileDelete}
+				fileName={selectedFile}
 			/>
 			<SideDrawer
 				files={files}
 				setSelectedFile={handleSetSelectedFile}
 				isOpen={isSideDrawerOpened}
 				onClose={() => setIsSideDrawerOpened(false)}
+				onCreateNewDocument={() => handleCreateNewDocument}
 			/>
 			<Navbar
 				fileName={selectedFile}
+				setSelectedFile={setSelectedFile}
 				onMenuClick={() => setIsSideDrawerOpened(true)}
-				onSave={() => mutate()}
+				onSave={() => uploadNewFile()}
 				isLoading={isFileUpdating}
 				onDelete={() => setIsDeleteFileModalOpen(true)}
 			/>
 			<ModeSwitch mode={mode} setMode={setMode} />
-			<div className={styles.container}>
-				{isMobile ? renderMobileLayout() : renderTabletOrBiggerLayout()}
-			</div>
+			<MarkdownLayout
+				markdown={markdown}
+				setMarkdown={setMarkdown}
+				mode={mode}
+			/>
 		</>
 	)
 }

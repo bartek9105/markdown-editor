@@ -6,6 +6,7 @@ import styles from './Navbar.module.scss'
 import Logo from 'components/Logo'
 import IconButton from 'components/IconButton'
 import Spinner from 'components/Spinner'
+import Input from 'components/Input'
 
 type NavbarProps = {
 	fileName: string
@@ -13,6 +14,7 @@ type NavbarProps = {
 	onSave: () => void
 	isLoading: boolean
 	onDelete: () => void
+	setSelectedFile: (fileName: string) => void
 }
 
 const Navbar = ({
@@ -20,7 +22,8 @@ const Navbar = ({
 	onMenuClick,
 	onSave,
 	isLoading,
-	onDelete
+	onDelete,
+	setSelectedFile
 }: NavbarProps) => {
 	return (
 		<nav className={styles.container}>
@@ -35,9 +38,16 @@ const Navbar = ({
 					<div className={styles.line}></div>
 					<div className={styles.fileInfo}>
 						<FileIcon />
-						<div>
+						<div className={styles.fileNameContainer}>
 							<span className={styles.fileHint}>Document Name</span>
-							<h6 className={styles.fileName}>{fileName}</h6>
+							{fileName ? (
+								<h6 className={styles.fileName}>{fileName}</h6>
+							) : (
+								<Input
+									placeholder='Enter file name'
+									onChange={(e) => setSelectedFile(e.target.value)}
+								/>
+							)}
 						</div>
 					</div>
 				</div>

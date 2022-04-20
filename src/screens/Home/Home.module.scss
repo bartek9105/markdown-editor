@@ -1,15 +1,1 @@
-@use 'styles/mixins/responsive' as *;
-@use 'styles/colors' as *;
 
-.container {
-	height: 100vh;
-
-	@include tablet {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-	}
-}
-
-.textArea {
-	border-right: 1px solid $color-mercury;
-}

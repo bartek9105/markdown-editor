@@ -17,13 +17,15 @@ type SideDrawerProps = {
 	setSelectedFile: (fileName: string) => void
 	isOpen: boolean
 	onClose: () => void
+	onCreateNewDocument: () => void
 }
 
 const SideDrawer = ({
 	files,
 	setSelectedFile,
 	isOpen,
-	onClose
+	onClose,
+	onCreateNewDocument
 }: SideDrawerProps) => {
 	const ref = useRef<any>()
 
@@ -35,7 +37,7 @@ const SideDrawer = ({
 				<motion.aside className={styles.container} ref={ref} {...slideFromLeft}>
 					<Logo />
 					<span className={styles.hint}>My documents</span>
-					<Button title='New document' />
+					<Button title='New document' onClick={onCreateNewDocument} />
 					<ul className={styles.filesList}>
 						{files?.map(({ date, name }, index) => (
 							<li key={index} onClick={() => setSelectedFile(name)}>

@@ -91,3 +91,9 @@
 		color: $color-white;
 	}
 }
+
+.fileNameContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}

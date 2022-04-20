@@ -10,9 +10,10 @@ type ModalProps = {
 	isOpen: boolean
 	onClose: () => void
 	onConfirm: () => void
+	fileName: string
 }
 
-const Modal = ({ isOpen, onClose, onConfirm }: ModalProps) => {
+const Modal = ({ isOpen, onClose, onConfirm, fileName }: ModalProps) => {
 	const ref = useRef<any>()
 	useClickAway(ref, () => onClose())
 
@@ -23,8 +24,8 @@ const Modal = ({ isOpen, onClose, onConfirm }: ModalProps) => {
 					<motion.div className={styles.container} {...popup} ref={ref}>
 						<Heading level={4}>Delete this document?</Heading>
 						<p className={styles.hint}>
-							Are you sure you want to delete the ‘welcome.md’ document and its
-							contents? This action cannot be reversed.
+							Are you sure you want to delete the {`'${fileName}'`} document and
+							its contents? This action cannot be reversed.
 						</p>
 						<Button title='Confirm & Delete' onClick={onConfirm} />
 					</motion.div>
