@@ -3,6 +3,7 @@
 
 .container {
 	height: 100vh;
+	overflow: scroll;
 
 	@include tablet {
 		display: grid;

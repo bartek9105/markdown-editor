@@ -7,7 +7,6 @@ import { useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { slideFromLeft } from 'animations/animations'
 import { File } from 'types/File.type'
-import { format } from 'date-fns'
 import { formatDate } from 'utils/dateFormat'
 
 type SideDrawerProps = {
