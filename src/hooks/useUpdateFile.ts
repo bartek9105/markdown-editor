@@ -1,10 +1,13 @@
 import { updateFile } from 'api/storage/markdown.api'
+import { useTranslation } from 'react-i18next'
 import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 
 const updateFileContentQueryKey = 'updateFileContentQueryKey'
 
 export const useUpdateFile = (markdown: string, selectedFile: string) => {
+	const { t } = useTranslation()
+
 	const { mutate: updateFileContent, isLoading: isFileUpdating } = useMutation({
 		mutationKey: updateFileContentQueryKey,
 		mutationFn: () => {
@@ -14,7 +17,7 @@ export const useUpdateFile = (markdown: string, selectedFile: string) => {
 			return updateFile(file, selectedFile)
 		},
 		onSuccess: () => {
-			toast.success('File saved successfuly')
+			toast.success(t('fileSaveSuccess'))
 		}
 	})
 

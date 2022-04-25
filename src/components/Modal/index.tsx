@@ -1,8 +1,10 @@
 import { popup } from 'animations/animations'
 import Button from 'components/Button'
 import Heading from 'components/MarkdownEditor/Heading'
+import Spinner from 'components/Spinner'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useClickAway } from 'react-use'
 import styles from './Modal.module.scss'
 
@@ -11,9 +13,18 @@ type ModalProps = {
 	onClose: () => void
 	onConfirm: () => void
 	fileName: string
+	isLoading: boolean
 }
 
-const Modal = ({ isOpen, onClose, onConfirm, fileName }: ModalProps) => {
+const Modal = ({
+	isOpen,
+	onClose,
+	onConfirm,
+	fileName,
+	isLoading
+}: ModalProps) => {
+	const { t } = useTranslation()
+
 	const ref = useRef<any>()
 	useClickAway(ref, () => onClose())
 
@@ -22,12 +33,13 @@ const Modal = ({ isOpen, onClose, onConfirm, fileName }: ModalProps) => {
 			{isOpen ? (
 				<div className={styles.overlay}>
 					<motion.div className={styles.container} {...popup} ref={ref}>
-						<Heading level={4}>Delete this document?</Heading>
-						<p className={styles.hint}>
-							Are you sure you want to delete the {`'${fileName}'`} document and
-							its contents? This action cannot be reversed.
-						</p>
-						<Button title='Confirm & Delete' onClick={onConfirm} />
+						<Heading level={4}>{t('deleteModal.title')}</Heading>
+						<p className={styles.hint}>{t('deleteModal.hint', { fileName })}</p>
+						{isLoading ? (
+							<Spinner />
+						) : (
+							<Button title={t('deleteModal.button')} onClick={onConfirm} />
+						)}
 					</motion.div>
 				</div>
 			) : null}

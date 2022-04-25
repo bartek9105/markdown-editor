@@ -1,0 +1,14 @@
+{
+	"appTitle": "Markdown",
+	"deleteModal": {
+		"title": "Delete this document?",
+		"hint": "Are you sure you want to delete the '{{fileName}}' document and its contents? This action cannot be reversed.",
+		"button": "Confirm & Delete"
+	},
+	"documentName": "Document Name",
+	"myDocuments": "My documents",
+	"fileDeleteSuccess": "File deleted successfuly",
+	"fileSaveSuccess": "File saved successfuly",
+	"fileUploadSuccess": "File was successfuly created",
+	"fileNameExistsError": "File with this name already exists"
+}

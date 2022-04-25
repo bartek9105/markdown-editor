@@ -7,6 +7,7 @@ import Logo from 'components/Logo'
 import IconButton from 'components/IconButton'
 import Spinner from 'components/Spinner'
 import Input from 'components/Input'
+import { useTranslation } from 'react-i18next'
 
 type NavbarProps = {
 	fileName: string
@@ -25,6 +26,8 @@ const Navbar = ({
 	onDelete,
 	setSelectedFile
 }: NavbarProps) => {
+	const { t } = useTranslation()
+
 	return (
 		<nav className={styles.container}>
 			<div className={styles.hamburgerIconContainer} onClick={onMenuClick}>
@@ -39,7 +42,7 @@ const Navbar = ({
 					<div className={styles.fileInfo}>
 						<FileIcon />
 						<div className={styles.fileNameContainer}>
-							<span className={styles.fileHint}>Document Name</span>
+							<span className={styles.fileHint}>{t('documentName')}</span>
 							{fileName ? (
 								<h6 className={styles.fileName}>{fileName}</h6>
 							) : (

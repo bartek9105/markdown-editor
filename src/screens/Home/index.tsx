@@ -17,7 +17,7 @@ const Home = () => {
 
 	const { files } = useGetFiles()
 	const { markdown, setMarkdown } = useGetFileMarkdown(selectedFileName)
-	const { deleteFile } = useDeleteFile(selectedFileName)
+	const { deleteFile, isFileDeleting } = useDeleteFile(selectedFileName)
 	const { uploadNewFile, isFileCreating } = useUploadNewFile(
 		markdown,
 		selectedFileName
@@ -65,6 +65,7 @@ const Home = () => {
 				onClose={() => setIsDeleteFileModalOpen(false)}
 				onConfirm={() => handleFileDelete()}
 				fileName={selectedFileName}
+				isLoading={isFileDeleting}
 			/>
 			<SideDrawer
 				files={files}
