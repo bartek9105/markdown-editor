@@ -1,11 +1,11 @@
 @use 'styles/mixins/responsive' as *;
 @use 'styles/colors' as *;
 
-$top-bar-height: 112px;
+$navbar-height: 72px;
 
 .container {
-	height: calc(100vh - $top-bar-height);
-	overflow: scroll;
+	height: calc(100vh - $navbar-height);
+	overflow-y: scroll;
 
 	@include tablet {
 		display: grid;
@@ -13,7 +13,14 @@ $top-bar-height: 112px;
 	}
 }
 
-.textArea {
-	border-right: 1px solid $color-mercury;
+.textarea {
+	@include tablet {
+		border-right: 1px solid $color-mercury;
+	}
+}
+
+.column {
+	display: flex;
+	flex-direction: column;
 	height: 100%;
 }

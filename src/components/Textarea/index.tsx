@@ -1,10 +1,11 @@
 import { TextareaHTMLAttributes } from 'react'
+import cn from 'classnames'
 import styles from './Textarea.module.scss'
 
 type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement>
 
-const Textarea = ({ ...restProps }: TextareaProps) => {
-	return <textarea className={styles.textarea} {...restProps} />
+const Textarea = ({ className, ...restProps }: TextareaProps) => {
+	return <textarea className={cn(styles.textarea, className)} {...restProps} />
 }
 
 export default Textarea

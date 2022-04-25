@@ -1,6 +1,7 @@
 import styles from './ModeSwitch.module.scss'
 import { ReactComponent as EyeIcon } from 'icons/Eye.svg'
 import { ReactComponent as EyeCrossedIcon } from 'icons/EyeCrossed.svg'
+import { useScreenType } from 'hooks/useScreenType'
 
 export enum Mode {
 	MARKDOWN = 'Markdown',
@@ -9,23 +10,25 @@ export enum Mode {
 
 type ModeSwitchProps = {
 	mode: Mode
-	setMode: (value: Mode) => void
+	setMode?: (value: Mode) => void
 }
 
 const ModeSwitch = ({ mode = Mode.PREVIEW, setMode }: ModeSwitchProps) => {
+	const { isMobile } = useScreenType()
+
 	return (
 		<div className={styles.container}>
 			<span className={styles.modeHint}>{mode}</span>
-			{mode === Mode.MARKDOWN ? (
+			{isMobile && mode === Mode.MARKDOWN ? (
 				<EyeIcon
 					className={styles.icon}
-					onClick={() => setMode(Mode.PREVIEW)}
+					onClick={() => setMode?.(Mode.PREVIEW)}
 				/>
 			) : null}
-			{mode === Mode.PREVIEW ? (
+			{isMobile && mode === Mode.PREVIEW ? (
 				<EyeCrossedIcon
 					className={styles.icon}
-					onClick={() => setMode(Mode.MARKDOWN)}
+					onClick={() => setMode?.(Mode.MARKDOWN)}
 				/>
 			) : null}
 		</div>

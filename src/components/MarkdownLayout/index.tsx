@@ -14,10 +14,12 @@ const MarkdownLayout = ({ markdown, setMarkdown }: MarkdownLayoutProps) => {
 	const [mode, setMode] = useState<Mode>(Mode.MARKDOWN)
 	const { isMobile } = useScreenType()
 
-	const renderTextArea = () => {
+	const renderTextArea = (modeType: Mode = mode) => {
 		return (
-			<div className={styles.textArea}>
+			<div className={styles.column}>
+				<ModeSwitch mode={modeType} setMode={setMode} />
 				<Textarea
+					className={styles.textarea}
 					value={markdown}
 					onChange={(e) => setMarkdown(e.target.value)}
 				/>
@@ -25,8 +27,13 @@ const MarkdownLayout = ({ markdown, setMarkdown }: MarkdownLayoutProps) => {
 		)
 	}
 
-	const renderMarkdownPreview = () => {
-		return <MarkdownEditor markdown={markdown} />
+	const renderMarkdownPreview = (modeType: Mode = mode) => {
+		return (
+			<div className={styles.column}>
+				<ModeSwitch mode={modeType} setMode={setMode} />
+				<MarkdownEditor markdown={markdown} />
+			</div>
+		)
 	}
 
 	const renderMobileLayout = () => {
@@ -41,19 +48,16 @@ const MarkdownLayout = ({ markdown, setMarkdown }: MarkdownLayoutProps) => {
 	const renderTabletOrBiggerLayout = () => {
 		return (
 			<>
-				{renderTextArea()}
-				{renderMarkdownPreview()}
+				{renderTextArea(Mode.MARKDOWN)}
+				{renderMarkdownPreview(Mode.PREVIEW)}
 			</>
 		)
 	}
 
 	return (
-		<>
-			<ModeSwitch mode={mode} setMode={setMode} />
-			<div className={styles.container}>
-				{isMobile ? renderMobileLayout() : renderTabletOrBiggerLayout()}
-			</div>
-		</>
+		<div className={styles.container}>
+			{isMobile ? renderMobileLayout() : renderTabletOrBiggerLayout()}
+		</div>
 	)
 }
 
