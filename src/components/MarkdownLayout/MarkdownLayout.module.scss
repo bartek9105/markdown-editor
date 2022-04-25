@@ -1,8 +1,10 @@
 @use 'styles/mixins/responsive' as *;
 @use 'styles/colors' as *;
 
+$top-bar-height: 112px;
+
 .container {
-	height: 100vh;
+	height: calc(100vh - $top-bar-height);
 	overflow: scroll;
 
 	@include tablet {
