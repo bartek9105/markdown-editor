@@ -1,20 +1,17 @@
 import MarkdownEditor from 'components/MarkdownEditor'
 import Textarea from 'components/Textarea'
 import styles from './MarkdownLayout.module.scss'
-import { Mode } from 'components/ModeSwitch'
+import ModeSwitch, { Mode } from 'components/ModeSwitch'
 import { useScreenType } from 'hooks/useScreenType'
+import { useState } from 'react'
 
 type MarkdownLayoutProps = {
 	markdown: string
 	setMarkdown: (markdown: string) => void
-	mode: Mode
 }
 
-const MarkdownLayout = ({
-	markdown,
-	setMarkdown,
-	mode
-}: MarkdownLayoutProps) => {
+const MarkdownLayout = ({ markdown, setMarkdown }: MarkdownLayoutProps) => {
+	const [mode, setMode] = useState<Mode>(Mode.MARKDOWN)
 	const { isMobile } = useScreenType()
 
 	const renderTextArea = () => {
@@ -51,9 +48,12 @@ const MarkdownLayout = ({
 	}
 
 	return (
-		<div className={styles.container}>
-			{isMobile ? renderMobileLayout() : renderTabletOrBiggerLayout()}
-		</div>
+		<>
+			<ModeSwitch mode={mode} setMode={setMode} />
+			<div className={styles.container}>
+				{isMobile ? renderMobileLayout() : renderTabletOrBiggerLayout()}
+			</div>
+		</>
 	)
 }
 

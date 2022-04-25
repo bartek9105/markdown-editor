@@ -7,11 +7,15 @@
 	left: 0;
 	bottom: 0;
 	width: 250px;
-	padding: 24px;
 	background-color: $color-smoke;
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
+}
+
+.topContainer {
+	display: grid;
+	row-gap: 24px;
+	padding: 24px;
 }
 
 .hint {
@@ -21,9 +25,4 @@
 	font-weight: 500;
 	letter-spacing: 2px;
 	text-transform: uppercase;
-}
-
-.filesList {
-	display: grid;
-	row-gap: 24px;
 }

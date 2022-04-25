@@ -10,4 +10,5 @@ export type File = {
 	updated_at: string
 	last_accessed_at: string
 	metadata: Metadata
+	created_at: string
 }

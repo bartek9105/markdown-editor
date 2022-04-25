@@ -45,7 +45,7 @@ const Navbar = ({
 							) : (
 								<Input
 									placeholder='Enter file name'
-									onChange={(e) => setSelectedFile(e.target.value)}
+									onBlur={(e) => setSelectedFile(e.target.value)}
 								/>
 							)}
 						</div>

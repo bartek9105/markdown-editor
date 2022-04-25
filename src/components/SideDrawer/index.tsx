@@ -6,15 +6,13 @@ import { useClickAway } from 'react-use'
 import { useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { slideFromLeft } from 'animations/animations'
-
-type File = {
-	name: string
-	date: string
-}
+import { File } from 'types/File.type'
+import { format } from 'date-fns'
+import { formatDate } from 'utils/dateFormat'
 
 type SideDrawerProps = {
-	files: File[]
-	setSelectedFile: (fileName: string) => void
+	files?: File[]
+	setSelectedFileName: (fileName: string) => void
 	isOpen: boolean
 	onClose: () => void
 	onCreateNewDocument: () => void
@@ -22,7 +20,7 @@ type SideDrawerProps = {
 
 const SideDrawer = ({
 	files,
-	setSelectedFile,
+	setSelectedFileName,
 	isOpen,
 	onClose,
 	onCreateNewDocument
@@ -35,13 +33,15 @@ const SideDrawer = ({
 		<AnimatePresence>
 			{isOpen ? (
 				<motion.aside className={styles.container} ref={ref} {...slideFromLeft}>
-					<Logo />
-					<span className={styles.hint}>My documents</span>
-					<Button title='New document' onClick={onCreateNewDocument} />
+					<div className={styles.topContainer}>
+						<Logo />
+						<span className={styles.hint}>My documents</span>
+						<Button title='New document' onClick={onCreateNewDocument} />
+					</div>
 					<ul className={styles.filesList}>
-						{files?.map(({ date, name }, index) => (
-							<li key={index} onClick={() => setSelectedFile(name)}>
-								<FileItem date={date} name={name} />
+						{files?.map(({ created_at, name }, index) => (
+							<li key={index} onClick={() => setSelectedFileName(name)}>
+								<FileItem date={formatDate(created_at)} name={name} />
 							</li>
 						))}
 					</ul>

@@ -1,7 +1,5 @@
-import ModeSwitch from 'components/ModeSwitch'
 import Navbar from '../../components/Navbar'
-import { useState } from 'react'
-import { Mode } from 'components/ModeSwitch'
+import { useEffect, useState } from 'react'
 import SideDrawer from 'components/SideDrawer'
 import Modal from 'components/Modal'
 import MarkdownLayout from 'components/MarkdownLayout'
@@ -12,38 +10,52 @@ import { useUpdateFile } from 'hooks/useUpdateFile'
 import { useGetFileMarkdown } from 'hooks/useGetFileMarkdown'
 
 const Home = () => {
-	const [mode, setMode] = useState<Mode>(Mode.MARKDOWN)
-	const [selectedFile, setSelectedFile] = useState('')
+	const [selectedFileName, setSelectedFileName] = useState('')
 
 	const [isSideDrawerOpened, setIsSideDrawerOpened] = useState(false)
 	const [isDeleteFileModalOpen, setIsDeleteFileModalOpen] = useState(false)
 
-	const { markdown, setMarkdown } = useGetFileMarkdown(selectedFile)
-	const { deleteFile } = useDeleteFile(selectedFile)
-	const { files, refetchFiles } = useGetFiles()
-	const { uploadNewFile } = useUploadNewFile(markdown)
-	const { updateFileContent, isFileUpdating } = useUpdateFile(
+	const { files } = useGetFiles()
+	const { markdown, setMarkdown } = useGetFileMarkdown(selectedFileName)
+	const { deleteFile } = useDeleteFile(selectedFileName)
+	const { uploadNewFile, isFileCreating } = useUploadNewFile(
 		markdown,
-		selectedFile
+		selectedFileName
 	)
 
+	const { updateFileContent, isFileUpdating } = useUpdateFile(
+		markdown,
+		selectedFileName
+	)
+
+	const [isNewFile, setIsNewFile] = useState(false)
+
+	useEffect(() => {
+		if (files) setSelectedFileName(files[0]?.name)
+	}, [files])
+
 	const handleSetSelectedFile = (fileName: string) => {
-		setMarkdown('')
-		setSelectedFile(fileName)
+		setSelectedFileName(fileName)
 		setIsSideDrawerOpened(false)
 	}
 
 	const handleFileDelete = () => {
 		deleteFile()
 		setIsDeleteFileModalOpen(false)
-		setSelectedFile('')
-		refetchFiles()
+		setSelectedFileName(files[0].name)
 	}
 
 	const handleCreateNewDocument = () => {
-		setSelectedFile('')
-		setMarkdown('')
+		setIsNewFile(true)
+		setSelectedFileName('')
 		setIsSideDrawerOpened(false)
+	}
+
+	const handleFileSave = () => {
+		if (!isNewFile) {
+			updateFileContent()
+		}
+		uploadNewFile()
 	}
 
 	return (
@@ -51,30 +63,25 @@ const Home = () => {
 			<Modal
 				isOpen={isDeleteFileModalOpen}
 				onClose={() => setIsDeleteFileModalOpen(false)}
-				onConfirm={() => handleFileDelete}
-				fileName={selectedFile}
+				onConfirm={() => handleFileDelete()}
+				fileName={selectedFileName}
 			/>
 			<SideDrawer
 				files={files}
-				setSelectedFile={handleSetSelectedFile}
+				setSelectedFileName={handleSetSelectedFile}
 				isOpen={isSideDrawerOpened}
 				onClose={() => setIsSideDrawerOpened(false)}
-				onCreateNewDocument={() => handleCreateNewDocument}
+				onCreateNewDocument={() => handleCreateNewDocument()}
 			/>
 			<Navbar
-				fileName={selectedFile}
-				setSelectedFile={setSelectedFile}
+				fileName={selectedFileName}
+				setSelectedFile={setSelectedFileName}
 				onMenuClick={() => setIsSideDrawerOpened(true)}
-				onSave={() => uploadNewFile()}
-				isLoading={isFileUpdating}
+				onSave={() => handleFileSave()}
+				isLoading={isFileUpdating || isFileCreating}
 				onDelete={() => setIsDeleteFileModalOpen(true)}
 			/>
-			<ModeSwitch mode={mode} setMode={setMode} />
-			<MarkdownLayout
-				markdown={markdown}
-				setMarkdown={setMarkdown}
-				mode={mode}
-			/>
+			<MarkdownLayout markdown={markdown} setMarkdown={setMarkdown} />
 		</>
 	)
 }

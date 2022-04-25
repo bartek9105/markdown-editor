@@ -10,11 +10,12 @@ export const useGetFileMarkdown = (selectedFile: string) => {
 	const { data: markdownData, isSuccess } = useQuery(
 		[getFileMarkdownQueryKey, selectedFile],
 		{
-			queryFn: () => downloadFile(selectedFile)
+			queryFn: () => selectedFile && downloadFile(selectedFile)
 		}
 	)
 
 	useEffect(() => {
+		setMarkdown('')
 		if (selectedFile && markdownData && isSuccess) {
 			setMarkdown(markdownData)
 		}
