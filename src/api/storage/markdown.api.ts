@@ -1,20 +1,20 @@
-import { supabase } from 'config/supabase'
+import { supabase } from 'config/supabase.config'
 
-const BUCKET = 'markdown'
+const BUCKET_NAME = 'markdown'
 
 export const getFiles = async () => {
-	const { data } = await supabase.storage.from(BUCKET).list()
+	const { data } = await supabase.storage.from(BUCKET_NAME).list()
 	return data
 }
 
 export const downloadFile = async (file: string) => {
-	const { data } = await supabase.storage.from(BUCKET).download(file)
+	const { data } = await supabase.storage.from(BUCKET_NAME).download(file)
 	const result = (await data?.text()) as string
 	return result
 }
 
 export const uploadFile = (file: Blob, fileName: string) => {
-	return supabase.storage.from(BUCKET).upload(fileName, file, {
+	return supabase.storage.from(BUCKET_NAME).upload(fileName, file, {
 		cacheControl: '3600',
 		upsert: false
 	})
@@ -22,7 +22,7 @@ export const uploadFile = (file: Blob, fileName: string) => {
 
 export const updateFile = async (file: Blob, fileToUpdate: string) => {
 	const { data, error } = await supabase.storage
-		.from(BUCKET)
+		.from(BUCKET_NAME)
 		.update(fileToUpdate, file, {
 			cacheControl: '3600',
 			upsert: false
@@ -31,5 +31,7 @@ export const updateFile = async (file: Blob, fileToUpdate: string) => {
 }
 
 export const removeFile = async (file: string) => {
-	const { data, error } = await supabase.storage.from(BUCKET).remove([file])
+	const { data, error } = await supabase.storage
+		.from(BUCKET_NAME)
+		.remove([file])
 }

@@ -7,7 +7,7 @@ import { useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { slideFromLeft } from 'animations/animations'
 import { File } from 'types/File.type'
-import { formatDate } from 'utils/dateFormat'
+import { formatDate } from 'utils/formatDate'
 import { useTranslation } from 'react-i18next'
 
 type SideDrawerProps = {
@@ -28,7 +28,6 @@ const SideDrawer = ({
 	const { t } = useTranslation()
 
 	const ref = useRef<any>()
-
 	useClickAway(ref, () => onClose())
 
 	return (
@@ -38,7 +37,7 @@ const SideDrawer = ({
 					<div className={styles.topContainer}>
 						<Logo />
 						<span className={styles.hint}>{t('myDocuments')}</span>
-						<Button title='New document' onClick={onCreateNewDocument} />
+						<Button title={t('newDocument')} onClick={onCreateNewDocument} />
 					</div>
 					<ul className={styles.filesList}>
 						{files?.map(({ created_at, name }, index) => (

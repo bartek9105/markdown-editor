@@ -1,4 +1,5 @@
 @use 'styles/colors' as *;
+@use 'styles/fonts' as *;
 
 .container {
 	height: 100%;
@@ -21,7 +22,7 @@
 .hint {
 	color: $color-rolling-stone;
 	font-size: 14px;
-	font-family: 'Roboto';
+	font-family: $font-family-roboto;
 	font-weight: 500;
 	letter-spacing: 2px;
 	text-transform: uppercase;

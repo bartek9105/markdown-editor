@@ -7,6 +7,7 @@
 	},
 	"documentName": "Document Name",
 	"myDocuments": "My documents",
+	"newDocument": "New document",
 	"fileDeleteSuccess": "File deleted successfuly",
 	"fileSaveSuccess": "File saved successfuly",
 	"fileUploadSuccess": "File was successfuly created",

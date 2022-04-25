@@ -1,17 +1,19 @@
+@use 'styles/sizes' as *;
+
 @mixin tablet {
-	@media (min-width: 768px) {
+	@media (min-width: $screen-tablet) {
 		@content;
 	}
 }
 
 @mixin desktop-sm {
-	@media (min-width: 1024px) {
+	@media (min-width: $screen-desktop-sm) {
 		@content;
 	}
 }
 
 @mixin desktop {
-	@media (min-width: 1440px) {
+	@media (min-width: $screen-desktop) {
 		@content;
 	}
 }

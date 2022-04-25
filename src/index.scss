@@ -1,4 +1,5 @@
 @use 'styles/colors' as *;
+@use 'styles/fonts' as *;
 
 * {
 	margin: 0;
@@ -7,7 +8,7 @@
 }
 
 body {
-	font-family: 'Roboto Slab', monospace;
+	font-family: $font-family-roboto-slab;
 	font-weight: 400;
 	height: 100vh;
 	overflow: hidden;
@@ -27,7 +28,7 @@ a {
 }
 
 .Toastify__toast {
-	font-family: 'Roboto';
+	font-family: $font-family-roboto;
 	font-size: 14px;
 	color: $color-white !important;
 	background-color: $color-shark !important;
